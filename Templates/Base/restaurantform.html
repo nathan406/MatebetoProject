@@ -1,0 +1,64 @@
+<html lang="en">
+{% extends 'Base/base.html' %}
+{% load static %}
+
+{% block title %} Register {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/loginRegisterUser.css' %}">
+    <title>loginRegisterUser</title>
+</head>
+<body>
+   
+        {% block content %}
+
+            <div class="container-fluid p-0" id="authenticate-direct">
+                <div id="authenticate-direct-choose" class="h-100 d-flex justify-content-center align-items-center">
+                    <div class="card p-4" id="authenticate-direct-card">  
+
+                        <div class="h5 text-center border-bottom p-2">Restaurant Register Form </div>       
+                        <div class="d-flex flex-column">
+                            <form action="" method="post" enctype="multipart/form-data">
+                                {%csrf_token%}
+                                <div class="signup-forms">
+                                    <label for="id_profile_picture">Select a profile picture:</label>
+                                    <input type="file" name="profile_picture" id="id_profile_picture">
+                                    <input type="text" name="restaurant_name" placeholder="restaurant name"> 
+                                    
+                                    <!-- {{form.as_p}} -->
+                                    
+                                </div>
+                                
+                                {%  if user.is_authenticated and request.user.is_restaurantowner %}
+                                     <button type="submit" class="btn btn-primary w-100">Submit</button>
+                                {% else %}
+                                    <p style="color: red;">you must be a restraurantowner to submit </p>
+                                {% endif %}
+
+                                {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    {% for field, errors in form.errors.items %}
+                                    <p>{{ field }}: {{ errors|join:", " }}</p>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+
+                               
+                                
+                            </form>
+                            
+                        </div>
+                        
+                    
+
+                    </div>
+                
+                </div>
+            </div>
+
+        {% endblock %} 
+
+</body>
+</html>
